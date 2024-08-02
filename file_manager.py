@@ -25,7 +25,6 @@ def clean_tmp_dir(tmp_dir):
     """
     files = os.listdir(tmp_dir)
     for file in files:
-        try:
+        if file.endswith('.jpg'):
             os.remove(tmp_dir + file)
-        except IsADirectoryError:
-            continue
+
