@@ -1,18 +1,22 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import time
+import requests
+from connector import VK
+from config import photos_dir
+from tqdm import tqdm
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+user_id = 'asdasdqwer'
+vk = VK(user_id)
+user_photos = vk.get_list_avatars()
+photos = user_photos['response']['items']
 
 
+for photo in tqdm(photos, desc=f'Скачивание аватарок {user_id}'):
+    likes = photo['likes']['count']
+    photo_content = requests.get(photo['sizes'][-1]['url'])
+    with open(f"{photos_dir}{likes}.jpg", 'wb') as new_photo:
+        new_photo.write(photo_content.content)
+    new_photo.close()
+    time.sleep(1)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
