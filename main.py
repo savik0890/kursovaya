@@ -3,8 +3,10 @@ import time
 import requests
 from connector import VK
 from config import photos_dir
+from file_manager import save_to_file
 from tqdm import tqdm
 from datetime import datetime
+
 
 user_id = 'asdasdqwer'
 #user_id = 289697403
@@ -22,9 +24,7 @@ def download_avatars(user_id: str, count=5):
                 file_name = f"{likes} - {datetime.now()}.jpg"
             else:
                 file_name = f"{likes}.jpg"
-            with open(f"{photos_dir}{file_name}", 'wb') as new_photo:
-                new_photo.write(photo_content.content)
-            new_photo.close()
+            save_to_file(photo_content.content, photos_dir, file_name)
             time.sleep(1)
     except KeyError:
         print('Couldnt connect to profile, it is probably closed')
@@ -32,4 +32,3 @@ def download_avatars(user_id: str, count=5):
 
 if __name__ == '__main__':
     download_avatars(user_id)
-    print(datetime.now())
