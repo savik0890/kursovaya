@@ -61,15 +61,20 @@ def upload_to_yandex_disk(user_id, files):
     TOKEN = env('TOKEN')
 
     ya_disk = Yandex(TOKEN, user_id=user_id)
+
+    # Проверяет, есть ли уже папка на яндекс диске
     if ya_disk.yandex_find_dir().status_code == 404:
         ya_disk.yandex_create_dir()
     else:
         return f"Directory {user_id} exists"
 
+    # Из полученного json объекта берет имена файлов, которые нужно загрузить на диск
     for file in tqdm(files.get('images'), desc=f'Загрузка на Я.Диск в папку {user_id}'):
+        # Запрашиваем у яндекса URL для загрузки файла
         upload_url = ya_disk.yandex_get_file_url(filename=file['file_name']).text
         try:
             with open(f"{photos_dir}{file['file_name']}", 'rb') as f:
+                # Загружаем файл по полученному URL
                 ya_disk.yandex_upload_file(json.loads(upload_url)['href'], f)
         except KeyError:
             pass
