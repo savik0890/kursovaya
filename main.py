@@ -81,7 +81,7 @@ def upload_to_yandex_disk(user_id, files):
 
 
 if __name__ == '__main__':
-    user_id = 'asdasdqwer'
+    user_id = str(input('Введите id пользователя VK: '))
     json_files = download_avatars(user_id)
     with open('download_report.json', 'w') as file:
         file.write(json.dumps(json_files))
