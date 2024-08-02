@@ -83,6 +83,9 @@ def upload_to_yandex_disk(user_id, files):
 if __name__ == '__main__':
     user_id = 'asdasdqwer'
     json_files = download_avatars(user_id)
+    with open('download_report.json', 'w') as file:
+        file.write(json.dumps(json_files))
+    file.close()
     upload_to_yandex_disk(user_id, json_files)
     file_manager.clean_tmp_dir(photos_dir)
 
