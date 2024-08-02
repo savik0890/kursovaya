@@ -4,7 +4,7 @@ import config
 
 
 class VK:
-    def __init__(self, user_id, version='5.131', count=5):
+    def __init__(self, user_id, count, version='5.131'):
         self.token = config.vk_token
         self.id = user_id
         self.version = version
