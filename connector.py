@@ -4,8 +4,8 @@ import config
 
 
 class VK:
-    def __init__(self, user_id, count, version='5.131'):
-        self.token = config.vk_token
+    def __init__(self, vk_token, user_id, count, version='5.131'):
+        self.token = vk_token
         self.id = user_id
         self.version = version
         self.params = {'access_token': self.token, 'v': self.version}
